@@ -4,19 +4,24 @@ if(users == undefined)
     users=[];
     let admin = {};
     admin.userName = "admin";
-    admin.password = "admin";
+    admin.password = window.btoa("admin");
+    //var encodedString = window.btoa( baseString );
+    //console.log(admin);
     admin.email = "admin@gmail.com";
     users.push(admin);
     localStorage.setItem("users",JSON.stringify(users))
 }
 
+
 document.getElementById("signinlog").addEventListener("click", function loginWithEmail(event) {
     event.preventDefault()
     let email = document.getElementById("sign-in-email").value;
-    let password = document.getElementById("sign-in-pass").value;
+    let password = window.btoa(document.getElementById("sign-in-pass").value);
+    //console.log(password);
     if ((email != "") && (password != "")) {
         if (validateEmail(email)) {
             users = JSON.parse(localStorage.getItem("users"));
+            //console.log(users);
             let flag = 0;
             for(let i=0;i<users.length;i++)
             {
@@ -59,10 +64,10 @@ document.getElementById("signinlog").addEventListener("click", function loginWit
 
 document.getElementById("signuplog").addEventListener("click", function signupWithEmail(event) {
     event.preventDefault()
-    console.log("singup")
+    //console.log("singup")
     let uname = document.getElementById("sign-up-username").value;
     let email = document.getElementById("sign-up-email").value;
-    let password = document.getElementById("sign-up-pass").value;
+    let password = window.btoa(document.getElementById("sign-up-pass").value);
     users = JSON.parse(localStorage.getItem("users"));
     if ((email != "") && (password != "") && (uname != "")) {
         if (validateEmail(email)) {
