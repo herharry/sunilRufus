@@ -15,7 +15,7 @@ function getMovieFromLocalStorage()
             position: "topRight"
         })
     }
-    movies = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : \"2020-01-01\"\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : \"2020-02-02\"\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : [\"tamil\", \"english\"],\r\n  \"date\" : \"2020-03-03\"\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\", \"telugu\"],\r\n \"date\" : \"2020-04-04\"\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"malayalam\", \"english\"],\r\n  \"date\" : \"2020-05-05\"\r\n}]\r\n")
+    movies = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : 1604852551\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : 1604852531\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : [\"tamil\", \"english\"],\r\n  \"date\" : 1604852572\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\", \"telugu\"],\r\n \"date\" : 1604852451\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"malayalam\", \"english\"],\r\n  \"date\" : 1604852431\r\n}]\r\n")
 }
 function loadMovieJS() {
     let user = JSON.parse(localStorage.getItem("current_user"));
@@ -89,12 +89,8 @@ function movieLoader() {
           if ($("#noData").length == 0)
               $("#movieCards").append("<p class=\"mx-auto my-5\" id=\"noData\">No data found</p>")
       }
-
-      movies.forEach(function (movie) {
-         console.log(movie)
-          let flag = document.getElementById("movieCards" + "CARD" + movie.id);
-          loadMovieInNewCard(movie, "movieCards")
-      })
+    deleteAllCards();
+sortElements(movies);
   }
     // console.log("helos")
 //FIREBASE AUTHENTICATION FOR THE CURRENT USER ENDS *****************************************************************************
@@ -214,8 +210,7 @@ function gatherFilterElements() {
 
     console.log(filterList)
     //
-    // x = document.getElementById("open").checked ? filterList.push("open") : '';
-    // x = document.getElementById("full").checked ? filterList.push("full") : '';
+
     // x = document.getElementById("today").checked ? filterList.push("today") : '';
     // x = document.getElementById("tomorrow").checked ? filterList.push("tomorrow") : '';
     // //yet to do
@@ -249,6 +244,7 @@ function applyFilter(filterIDs) {
         console.log(reqList)
         deleteAllCards();
         $("#movieLoader").show()
+        let filteredMovies = [];
         if (reqList.length != 0) {
             for (let i = 0; i < reqList.length; i++) {
                 console.log(reqList[i])
@@ -256,15 +252,16 @@ function applyFilter(filterIDs) {
                 {
                     if (reqList[i] == movie.id) {
                         console.log("founddddd" + movie)
-                        loadMovieInNewCard(movie, "movieCards")
+                        filteredMovies.push(movie);
                         return false;
                     }
                 });
             }
+            sortElements(filteredMovies)
         } else {
             $("#tournamentLoader").hide()
             if ($("#noData").length == 0)
-                $("#tournamentCards").append("<p class=\"mx-auto my-5\" id=\"noData\">No data found</p>")
+                $("#movieCards").append("<p class=\"mx-auto my-5\" id=\"noData\">No data found</p>")
         }
     } else {
         // if no filters are selected
@@ -285,12 +282,10 @@ function getRequiredTournamentList(filterType, filterID) {
         case "genre" :
                 movies.forEach(function (movie) {
                     let movieGenreList = movie.genre;
-                    console.log(movieGenreList)
                     for(let j=0;j<movieGenreList.length;j++)
                     {
                         if(movieGenreList[j] == filterID)
                         {
-                            console.log(movie.id)
                             reqList.push(movie.id);
                             break;
                         }
@@ -324,6 +319,66 @@ function deleteAllCards() {
     document.getElementById("movieBody").appendChild(newParent);
 }
 
+function sortElements(sortMovies)
+{
+    let rate = document.getElementById("rating").checked ;
+    let time = document.getElementById("time").checked;
+    console.log(rate)
+    console.log(time)
+
+    if(rate == true)
+    {
+        sortMovies.sort(dynamicSort("-rating"))
+    }
+    else if(time == true)
+    {
+        sortMovies.sort(dynamicSort("-date"))
+    }
+    else if (rate == true && time == true)
+    {
+        sortMovies.sort(dynamicSortMultiple("-rating","-date"))
+    }
+
+    sortMovies.forEach(function (movie) {
+        loadMovieInNewCard(movie, "movieCards")
+    })
+}
+
+function dynamicSort(property) {
+    console.log("i")
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        /* next line works with strings and numbers,
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+function dynamicSortMultiple() {
+    /*
+     * save the arguments object as it will be overwritten
+     * note that arguments object is an array-like object
+     * consisting of the names of the properties to sort by
+     */
+    var props = arguments;
+    return function (obj1, obj2) {
+        var i = 0, result = 0, numberOfProperties = props.length;
+        /* try getting a different result from 0 (equal)
+         * as long as we have extra properties to compare
+         */
+        while(result === 0 && i < numberOfProperties) {
+            result = dynamicSort(props[i])(obj1, obj2);
+            i++;
+        }
+        return result;
+    }
+}
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     document.getElementById("filter").remove();
