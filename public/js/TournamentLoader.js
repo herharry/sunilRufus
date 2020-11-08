@@ -100,12 +100,15 @@ function loadMovieInNewCard(movie, ids) {
     $("#movieLoader").hide();
     const cardParent = document.getElementById(ids)
     let card = document.createElement("div");
-    card.className = "card col-12 col-lg-6 p-0 my-2 px-1";
+    card.className = "card col-12 col-lg-4 p-0 my-2 px-1";
     card.id = ids + "CARD" + movie.id;
 
     let image = document.createElement("img");
     image.src = movie.url;
     image.className = "card-img-top";
+    image.setAttribute("width","50%");
+    image.setAttribute("height","50%");
+
 
     let movieNames = document.createElement("h3");
     movieNames.id = ids + "NAMES" + movie.id;
