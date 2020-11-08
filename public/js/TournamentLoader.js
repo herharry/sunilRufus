@@ -1,3 +1,10 @@
+let user = JSON.parse(localStorage.getItem("current_user"));
+console.log(user)
+iziToast.info({
+    title: "welcome " + user.userName,
+    position: "topRight"
+});
+
 // FIREBASE AUTHENTICATION FOR THE CURRENT USER STARTS*****************************************************************************
 let GAMES;
 let TID_LIST = [];
