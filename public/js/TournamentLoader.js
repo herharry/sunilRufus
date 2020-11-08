@@ -5,12 +5,25 @@ iziToast.info({
     position: "topRight"
 });
 
-// FIREBASE AUTHENTICATION FOR THE CURRENT USER STARTS*****************************************************************************
-var json = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-01-01\"\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-02-02\"\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-03-03\"\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsdasf\",\r\n  \"date\" : \"2020-04-04\"\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsefwqrgd\",\r\n  \"date\" : \"2020-05-05\"\r\n}]\r\n")
+var movies ;
 let GAMES;
 let TID_LIST = [];
 let game
-function loadTournamentJS() {
+
+function getMovieFromLocalStorage()
+{
+    let moviesInLocalStorage = JSON.parse(localStorage.getItem("movies"));
+    if(moviesInLocalStorage == undefined)
+    {
+        iziToast.error({
+            message: error.message,
+            position: "topRight"
+        })
+    }
+    movies = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-01-01\"\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-02-02\"\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-03-03\"\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsdasf\",\r\n  \"date\" : \"2020-04-04\"\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsefwqrgd\",\r\n  \"date\" : \"2020-05-05\"\r\n}]\r\n")
+}
+function loadMovieJS() {
+    getMovieFromLocalStorage();
     setGenres()
     setLanguage()
     tournamentListener()
@@ -29,21 +42,20 @@ function createTemplate(data) {
 }
 
 function setLanguage() {
-  let genres = []
-  for(let i=0;i<json.length;i++)
-  {
-    if(!genres.includes(json[i].language.toLowerCase()))
-      genres.push(json[i].language.toLowerCase())
-  }
-  renderLanguage(genres)
-}loadTournamentJS
+    let genres = []
+    for (let i = 0; i < movies.length; i++) {
+        if (!genres.includes(movies[i].language.toLowerCase()))
+            genres.push(movies[i].language.toLowerCase())
+    }
+    renderLanguage(genres)
+}
 
 function setGenres() {
   let genres = []
-  for(let i=0;i<json.length;i++)
+  for(let i=0;i<movies.length;i++)
   {
-      for(let j=0;j<json[i].genre.length;j++) {
-        genres.push(json[i].genre[j])
+      for(let j=0;j<movies[i].genre.length;j++) {
+        genres.push(movies[i].genre[j])
       }
   }
   renderGenre(genres)
