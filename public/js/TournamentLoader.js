@@ -6,131 +6,87 @@ iziToast.info({
 });
 
 // FIREBASE AUTHENTICATION FOR THE CURRENT USER STARTS*****************************************************************************
+var json = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-01-01\"\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-02-02\"\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : \"dsd\",\r\n  \"date\" : \"2020-03-03\"\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsdasf\",\r\n  \"date\" : \"2020-04-04\"\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : \"dsefwqrgd\",\r\n  \"date\" : \"2020-05-05\"\r\n}]\r\n")
 let GAMES;
 let TID_LIST = [];
-async function loadTournamentJS() {
-    let uid = USER_IN_SESSION.uid;
-    await fetch("/user?uid=" + uid)
-        .then(res => res.json())
-        .then(function (res) {
-            if (res.val != "false") {
-                userInDB = res.val;
-            }
-        });
-
-    getGame();
-
-    if (getCookie("SU_SY") == "") {
-        await fetch("/createToken", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                uid
-            }),
-        }).then(res => res.text()).then(function (res) {
-            firebase.auth().signInWithCustomToken(res.toString()).then(function (user) {
-                setCookie("SU_SY", res.toString(), 1);
-                tournamentListener();
-            })
-        });
-    } else {
-        firebase.auth().signInWithCustomToken(getCookie("SU_SY")).then(function (user) {
-            // console.log("hey")
-            tournamentListener();
-        }).catch(reason => {
-            console.log(reason);
-            delete_cookie("SU_SY");
-            loadProfileJS();
-        });
-    }
-}
-
-getGame = (data) => {
-    fetch("/games")
-        .then(res => res.json())
-        .then(res => setGames(this.formatResponse(res), data))
-        .catch(err => err);
-}
-
-function setGames(data) {
-    GAMES = data;
-    renderGames(data)
+let game
+function loadTournamentJS() {
+    setGenres()
+    setLanguage()
+    tournamentListener()
 }
 
 function createTemplate(data) {
-    // console.log(id);
     return `
     <div class="custom-control custom-checkbox ml-2 pb-2">
-        <input type="checkbox" class="custom-control-input filled-in" id="${data.name.toLowerCase()}">
+        <input type="checkbox" class="custom-control-input filled-in" id="${data.toLowerCase()}">
             <label
                 class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                for="${data.name.toLowerCase()}">${data.name}
+                for="${data.toLowerCase()}">${data}
             </label>
     </div>
             `
 }
 
-function renderGames(game, id) {
+function setLanguage() {
+  let genres = []
+  for(let i=0;i<json.length;i++)
+  {
+    if(!genres.includes(json[i].language.toLowerCase()))
+      genres.push(json[i].language.toLowerCase())
+  }
+  renderLanguage(genres)
+}loadTournamentJS
+
+function setGenres() {
+  let genres = []
+  for(let i=0;i<json.length;i++)
+  {
+      for(let j=0;j<json[i].genre.length;j++) {
+        genres.push(json[i].genre[j])
+      }
+  }
+  renderGenre(genres)
+}
+
+function renderLanguage(genres) {
     const template =
-        game.length === 0 ? `
+        genres.length === 0 ? `
     <p class="mx-auto">No matching results found.</p>
-    ` : game.map((product) => createTemplate(product)).join("\n");
-    $("#gameFilter").html("<p>Games</p>" + template);
+    ` : genres.map((product) => createTemplate(product)).join("\n");
+    $("#languageFilter").html("<p>Language</p>" + template);
+
+}
+
+function renderGenre(genres) {
+    const template =
+        genres.length === 0 ? `
+    <p class="mx-auto">No matching results found.</p>
+    ` : genres.map((product) => createTemplate(product)).join("\n");
+    $("#gameFilter").html("<p>Genres</p>" + template);
 
 }
 
 
 
 function tournamentListener() {
-    DB.collection("Tournaments").where("isFinished", "==", false)
-        .onSnapshot(function (snapshot) {
-            if (snapshot.empty) {
-                $("#tournamentLoader").hide()
-                if ($("#noData").length == 0)
-                    $("#tournamentCards").append("<p class=\"mx-auto my-5\" id=\"noData\">No data found</p>")
-            }
-            tournamentHolder = [];
-            snapshot.forEach(function (doc) {
-                let tournament = {};
-                tournament = doc.data();
-                tournament.id = doc.id;
-                TID_LIST.push(doc.id)
-                tournamentHolder.push(tournament)
-                // console.log(tournament.id)
-                let flag = document.getElementById("tournamentCards" + "CARD" + tournament.id);
-                if (doc.data().requestStatus == 1) {
-                    if (typeof (flag) != 'undefined' && flag != null) {
-                        loadTournamentInExistingCard(tournament, "tournamentCards");
-                    } else {
-                        loadTournamentInNewCard(tournament, "tournamentCards")
-                    }
-                }
 
-                let myTournaments = userInDB.tournamentIds;
-                if (myTournaments.length != 0) {
-                    for (let i = 0; i < myTournaments.length; i++) {
-                        // console.log(myTournaments[i])
-                        if (tournament.id == myTournaments[i]) {
-                            let flag = document.getElementById("myTournamentCards" + "CARD" + tournament.id);
-                            if (typeof (flag) != 'undefined' && flag != null) {
-                                loadTournamentInExistingCard(tournament, "myTournamentCards");
-                            } else {
-                                loadTournamentInNewCard(tournament, "myTournamentCards")
-                            }
+      if (json.empty) {
+          $("#tournamentLoader").hide()
+          if ($("#noData").length == 0)
+              $("#tournamentCards").append("<p class=\"mx-auto my-5\" id=\"noData\">No data found</p>")
+      }
 
-                        }
-                    }
-                } else {
-                    if ($("#myNoData").length == 0)
-                        $("#myTournamentCards").append("<p class=\"mx-auto my-5\" id=\"myNoData\">No data found</p>")
-                }
-            })
-        });
+      tournamentHolder = [];
+      json.forEach(function (doc) {
+          let tournament = {};
+          tournament = doc
+          tournamentHolder.push(tournament)
+          let flag = document.getElementById("tournamentCards" + "CARD" + tournament.id);
+          loadTournamentInNewCard(tournament, "tournamentCards")
+      })
+  }
     // console.log("helos")
-}
 //FIREBASE AUTHENTICATION FOR THE CURRENT USER ENDS *****************************************************************************
 
 
@@ -141,7 +97,6 @@ function loadTournamentInNewCard(tournament, ids) {
     let card = document.createElement("div");
     card.className = "card col-12 col-lg-6 p-0 my-2 px-1";
     card.id = ids + "CARD" + tournament.id;
-    card.setAttribute("onClick", "loadSpecificTournament(this.id)");
 
     // let img = document.createElement("img");
     // img.src = getGameImage(tournaments[i].gameID)
@@ -150,56 +105,11 @@ function loadTournamentInNewCard(tournament, ids) {
     let tournamentNames = document.createElement("h3");
     tournamentNames.id = ids + "NAMES" + tournament.id;
     tournamentNames.className = "card-title text-upper";
-    tournamentNames.innerText = tournament.name;
+    tournamentNames.innerText = tournament.movie;
     let cardBody = document.createElement("div");
     cardBody.className = "card-body  bg-dark rounded-lg py-2";
     let cardBottom = document.createElement("div");
-    cardBottom.className = "row mb-2 border-bottom";
-    let tournamentprize = document.createElement("div");
-    tournamentprize.id = ids + "NAME" + tournament.id;
-    tournamentprize.className = "col-3 p-1 text-center";
-    var total = 0;
-    tournament.prizePool.forEach(element => {
-        total += element;
-    });
-    tournamentprize.innerText = "prize pool" + '\n' + total;
-    let amount = document.createElement("div");
-    amount.id = ids + "AMOUNT" + tournament.id;
-    amount.className = "col-3 text-center p-1 border-right";
-    amount.innerText = "Amount " + '\n' + tournament.amount;
-    let time = document.createElement("div");
-    time.id = ids + "TIME" + tournament.id;
-    time.className = "col-4 p-1 border-right";
-    let timestamp = tournament.time.seconds * 1000;
-    let tournamentDate = new Date(timestamp).toLocaleString(undefined, {
-        month: 'short',
-        day: '2-digit',
-        year: 'numeric'
-
-    })
-    let tournamentTime = new Date(timestamp).toLocaleTimeString(undefined, {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-    time.innerHTML = tournamentDate + "<br>" + tournamentTime;
-    let players = document.createElement("div");
-    players.id = ids + "PLAYERS" + tournament.id;
-    players.className = "col-2 text-center border-right p-1";
-    players.innerHTML = "seats <br>" + (tournament.totalSeats - tournament.vacantSeats) + "/" + tournament.totalSeats;
-    let progress = document.createElement("div");
-    progress.className = "progress mt-4";
-    let progressBar = document.createElement("div");
-    progressBar.id = ids + "PROGRESS_BAR" + tournament.id;
-    progressBar.className = "progress-bar bg-dark progress-gradient";
-    progressBar.setAttribute("role", "progressbar");
-    let percent = ((tournament.totalSeats - tournament.vacantSeats) / tournament.totalSeats) * 100;
-    progressBar.setAttribute("style", "width :" + percent + "%");
-    progressBar.setAttribute("role", "progressbar");
-    progressBar.innerHTML = parseInt(percent) + "% full";
-    let remainig = document.createElement("p");
-    remainig.id = ids + "REMAINING" + tournament.id;
-    remainig.className = "float-left text-small"
-    remainig.innerHTML = tournament.vacantSeats + " remaining";
+    cardBottom.className = "row mb-2 border-bottom"
 
 
 
@@ -207,25 +117,20 @@ function loadTournamentInNewCard(tournament, ids) {
     card.appendChild(cardBody);
     cardBody.appendChild(tournamentNames);
     cardBody.appendChild(cardBottom);
-    cardBottom.appendChild(amount);
-    cardBottom.appendChild(time);
-    cardBottom.appendChild(players);
-    cardBottom.appendChild(tournamentprize);
-    progress.appendChild(progressBar);
 
-    cardBody.appendChild(progress);
-    cardBody.appendChild(remainig);
-
-    if (ids != "myTournamentCards") {
-        let button = document.createElement("a");
-        button.className = "btn btn-sm btn-primary px-4 py-1 mt-3 mx-3 float-right";
-        (percent == 100) ? button.classList.add("active"): button.classList.add("btn-primary")
-        button.text = "Join"
-        button.id = tournament.id;
-        button.setAttribute("onClick", "loadSpecificTournament(this.id)");
-        cardBody.appendChild(button);
-    }
     cardParent.appendChild(card);
+    let parent = document.getElementById(ids);
+    card.addEventListener("click", function() {showMovieModal(tournament.id)},true);
+    let img = document.createElement("img");
+    img.src = tournament.url;
+    let card_im = document.createAttribute("class");
+    card_im.value = "card-img-top card_img"
+    img.setAttributeNode(card_im)
+    let att = document.createAttribute("class");
+    att.value = "col-3 p-0 mr-4 bg-dark game-scroll-box  card";
+    card.setAttributeNode(att);
+    card.appendChild(img);
+    parent.appendChild(card);
 }
 
 
@@ -414,3 +319,4 @@ function deleteAllCards() {
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     document.getElementById("filter").remove();
 }
+
