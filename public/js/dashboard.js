@@ -3,9 +3,26 @@ let lang = []
 let movies;
 let GAMES;
 let TID_LIST = [];
-let game
+let game;
+
+function checkAdmin()
+{
+    if(checkUser() == 2)
+    {
+        let parent = document.getElementById("adminList");
+        let admin = document.createElement("li");
+        admin.className = "nav-item";
+        let a = document.createElement("a");
+        a.className = "nav-link middle";
+        a.setAttribute("href","./admin.html");
+        a.innerHTML = "admin";
+        admin.appendChild(a);
+        parent.appendChild(admin);
+    }
+}
 
 function loadMovieJS() {
+    checkAdmin();
     let user = JSON.parse(localStorage.getItem("current_user"));
     console.log(user)
     iziToast.info({
