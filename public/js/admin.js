@@ -19,7 +19,7 @@ function requestMovie()
     let movieRating = document.getElementById("requestrate").value;
 
     movies.push({
-        id:movies.length,
+        id:movies.length+1,
         movie:movieName,
         genre:movieGenre,
         language:movieLang,
