@@ -102,8 +102,12 @@ function loadMovieInNewCard(movie, ids) {
     let card = document.createElement("div");
     card.className = "card";
     card.id = ids + "CARD" + movie.id;
+<<<<<<< HEAD:public/js/dashboard.js
     card.setAttribute("onclick","loadSpecificMovie(this)");
 
+=======
+    card.setAttribute("onclick","loadSpecificTournament(this)")
+>>>>>>> added:public/js/TournamentLoader.js
     let image = document.createElement("img");
     image.src = movie.url;
     image.className = "card-img-top";
