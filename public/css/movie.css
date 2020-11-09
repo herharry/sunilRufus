@@ -1,7 +1,7 @@
 @import url("headerfooter.css");
 
 
-.tournamentImage {
+.movieImage {
     width: 100%;
     /*height: 100%;*/
     box-shadow: gray;
@@ -65,4 +65,38 @@ h3 {
 
 th{
     color: lightgray ; 
+}
+
+.star-div {
+    display: inline-block;
+    padding: 5px 0px;
+    cursor: pointer;
+}
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 50px;
+
+}
+
+.star-under {
+    color: #ddd;
+}
+
+.star-over {
+    color: #f80;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.star-visible {
+    display: inline-block;
+}
+
+.star-hover {
+    display: inline-block;
+    color: #3399ff;
 }
