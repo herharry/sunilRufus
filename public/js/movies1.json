@@ -4,42 +4,42 @@
   "url" : "https://in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/anniyan-et00002333-24-03-2017-16-17-18.jpg",
   "genre" : ["suspense", "thriller"],
   "rating" : 4,
+  "language" : "dsd",
   "date" : "2020-01-01"
 },
-
 {
   "id":2,
   "movie" : "Banyan",
   "url" : "https://in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/anniyan-et00002333-24-03-2017-16-17-18.jpg",
   "genre" : ["comedy"],
   "rating" : 2,
+  "language" : "dsd",
   "date" : "2020-02-02"
 },
-
 {
   "id":3,
   "movie" : "Saniyan",
   "url" : "https://in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/anniyan-et00002333-24-03-2017-16-17-18.jpg",
   "genre" : ["suspense"],
   "rating" : 1,
+  "language" : "dsd",
   "date" : "2020-03-03"
 },
-
 {
   "id":4,
   "movie" : "jsdbfhbsd",
   "url" : "https://in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/anniyan-et00002333-24-03-2017-16-17-18.jpg",
   "genre" : ["horror"],
   "rating" : 4,
+  "language" : "dsdasf",
   "date" : "2020-04-04"
 },
-
 {
   "id":5,
   "movie" : "Suriya",
   "url" : "https://in.bmscdn.com/iedb/movies/images/mobile/thumbnail/large/anniyan-et00002333-24-03-2017-16-17-18.jpg",
   "genre" : ["thriller"],
   "rating" : 4,
+  "language" : "dsefwqrgd",
   "date" : "2020-05-05"
-}
-]
+}]

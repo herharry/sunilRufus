@@ -7,37 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="description" content="Your all in one gaming platform. Engage in tournaments and conquer">
     <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="css/iziToast.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="js/iziToast.min.js" type="text/javascript"></script>
 </head>
 
 <body class="custom">
-    <!-- <div id="overlay">
-        <div class="spinner"></div>
-        <br />
-        Loading...
-    </div> -->
+
     <nav class="navbar navbar-expand-lg navbar-dark py-0 static-top">
         <div class="container-fluid iii">
-            <a class="navbar-brand" href="/dashboard">
+            <a class="navbar-brand" href="./dashboard.html">
                 <img src="http://placehold.it/150x50?text=Logo" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item ">
-                        <a class="nav-link middle" href="/dashboard">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link middle" href="/videos">Videos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link middle" href="/profile">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link middle" href="#footer">Contact</a>
+                        <a class="nav-link middle" href="./dashboard.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link middle" onclick="logout()">logout</a>
@@ -47,233 +36,85 @@
         </div>
     </nav>
 
-
-
-
-    <div class="">
-
-        <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
-
-            <!-- Wrapper for carousel items -->
-            <div class="carousel-inner" id="bannerList">
-
+    <!--
+            <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+                <div class="carousel-inner" id="bannerList">
+                </div>
+                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
             </div>
-            <!-- Carousel controls -->
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-    </div>
+        </div> -->
 
     <div class="container my-1 ">
         <!-- tournaments section  -->
 
         <div class="row mt-5 px-0">
             <div class="col-md-3 pr-md-3 px-0 filter-pc">
-                <div class="filter rounded-lg" id="filter">
+                <div class="filter rounded-lg" id="filters">
                     <h4 class="font-weight-bold w-100 border-bottom px-2 py-1">FILTER</h4>
 
                     <div class="row p-2 w-100">
-
-                        <section class="mb-3 pl-3 col-6 col-md-12">
-                            <p>Date</p>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="today">
-                                <label class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                    for="today">Today</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="tomorrow">
-                                <label class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                    for="tomorrow">Tomorrow</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="customDate">
-                                <label class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                    for="customDate">Date</label>
-                            </div>
-                            <input type="checkbox" class="selector form-control form-control-sm ml-4 w-75"
-                                id="customDates" placeholder="Select date">
+                        <section class="mb-3 pl-3 col-6 col-md-12" id="languageFilter">
+                            <p>Language</p>
                         </section>
 
-                        <section class="mb-3 pl-3 col-6 col-md-12">
-                            <p>Status</p>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="open">
-                                <label class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                    for="open">Open</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="full">
-                                <label class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                    for="full">Full</label>
-                            </div>
-                        </section>
-
-                        <section class="mb-3 pl-3 col-md-12" id="gameFilter">
-                            <p>Games</p>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="pubg">
-                                <label
-                                    class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                    for="pubg">pubg</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="cod">
-                                <label
-                                    class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                    for="cod">cod</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="cr">
-                                <label
-                                    class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                    for="cod">clash Royale</label>
-                            </div>
-                            <div class="custom-control custom-checkbox ml-2 pb-2">
-                                <input type="checkbox" class="custom-control-input filled-in" id="ff">
-                                <label
-                                    class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                    for="cod">free fire</label>
-                            </div>
+                        <section class="mb-3 pl-3 col-md-12" id="genreFilter">
+                            <p>genre</p>
                         </section>
 
                         <button type="button" class="btn btn-outline-info waves-effect btn-sm w-100 ml-4"
-                            onclick="gatherFilterElements()">apply</button>
+                                onclick="gatherFilterElements()">apply</button>
+                    </div>
+
+                    <h4 class="font-weight-bold w-100 border-bottom px-2 py-1">SORT</h4>
+
+                    <div class="row p-2 w-100">
+                        <section class="mb-3 pl-3 col-6 col-md-12" id="sorter">
+                            <div class="custom-control custom-checkbox ml-2 pb-2">
+                                <input type="checkbox" class="custom-control-input filled-in" id="rating">
+                                <label class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1" for="rating">Rating
+                                </label>
+                            </div>
+                            <div class="custom-control custom-checkbox ml-2 pb-2">
+                                <input type="checkbox" class="custom-control-input filled-in" id="time">
+                                <label class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1" for="time">Recently added
+                                </label>
+                            </div>
+                        </section>
+                        <button type="button" class="btn btn-outline-info waves-effect btn-sm w-100 ml-4"
+                                onclick="gatherFilterElements()">apply</button>
                     </div>
                 </div>
             </div>
 
 
-            <div class="tournamentSection col-md-9 px-0">
+
+
+            <div class="movieSection col-md-9 px-0">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="tournament-tab" data-toggle="tab" href="#tournament" role="tab"
-                            aria-controls="home" aria-selected="true">Tournaments</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                            aria-controls="profile" aria-selected="false">My tournaments</a>
+                        <a class="nav-link active" id="movie-tab" data-toggle="tab" href="#movie" role="tab"
+                           aria-controls="home" aria-selected="true">Movies</a>
                     </li>
                 </ul>
 
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="tournament" role="tabpanel"
-                        aria-labelledby="tournament-tab">
-                        <div class="py-4" id="tournamentBody">
+                    <div class="tab-pane fade show active" id="movie" role="tabpanel"
+                         aria-labelledby="movie-tab">
+                        <div class="py-4" id="movieBody">
 
-                            <div class="col-md-3 pr-md-3 px-0 d-md-none">
-                                <div class="filter rounded-lg" id="filter">
-                                    <h5 class="font-weight-bold w-100 d-flex justify-content-end pr-2 py-1" data-toggle="collapse"
-                                        data-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">FILTER</h5>
-                                    <div class="collapse" id="collapseExample">
-
-                                        <div class="row p-2 w-100">
-
-                                            <section class="mb-3 pl-3 col-6 col-md-12">
-                                                <p>Date</p>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="today">
-                                                    <label
-                                                        class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                                        for="today">Today</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="tomorrow">
-                                                    <label
-                                                        class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                                        for="tomorrow">Tomorrow</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="customDate">
-                                                    <label
-                                                        class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                                        for="customDate">Date</label>
-                                                </div>
-                                                <input type="checkbox"
-                                                    class="selector form-control form-control-sm ml-4 w-75"
-                                                    id="customDates" placeholder="Select date">
-                                            </section>
-
-                                            <section class="mb-3 pl-3 col-6 col-md-12">
-                                                <p>Status</p>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="open">
-                                                    <label
-                                                        class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                                        for="open">Open</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="full">
-                                                    <label
-                                                        class="custom-control-label small w-100 card-link-secondary px-2 py-1"
-                                                        for="full">Full</label>
-                                                </div>
-                                            </section>
-
-                                            <section class="mb-3 pl-3 col-md-12" id="gameFilter">
-                                                <p>Games</p>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="pubg">
-                                                    <label
-                                                        class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                                        for="pubg">pubg</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="cod">
-                                                    <label
-                                                        class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                                        for="cod">cod</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="cr">
-                                                    <label
-                                                        class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                                        for="cod">clash Royale</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox ml-2 pb-2">
-                                                    <input type="checkbox" class="custom-control-input filled-in"
-                                                        id="ff">
-                                                    <label
-                                                        class="custom-control-label small w-100 text-uppercase card-link-secondary px-2 py-1"
-                                                        for="cod">free fire</label>
-                                                </div>
-                                            </section>
-
-                                            <button type="button"
-                                                class="btn btn-outline-info waves-effect btn-sm w-100 ml-4"
-                                                onclick="gatherFilterElements()">apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center" id="tournamentLoader">
+                            <div class="text-center" id="movieLoader">
                                 <div class="spinner-border" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between flex-wrap col-12" id="tournamentCards">
+                            <div class="d-flex justify-content-between flex-wrap col-12" id="movieCards">
                             </div>
 
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="py-4">
-                            <div class="d-flex justify-content-between flex-wrap col-12" id="myTournamentCards">
-
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -282,9 +123,6 @@
         </div>
 
     </div>
-
-
-
 
     <!-- Footer section  -->
 
@@ -312,32 +150,33 @@
         <p class="bg-primary mb-0 py-1 w-100 text-center"> Made with <i class="fas fa-heart"></i></p>
     </section>
 
-    <script src="js/iziToast.min.js" type="text/javascript"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js">
     </script>
-    <script src="./js/Constants.js"></script>
-    <script src="js/BannerLoader.js"></script>
-    <script src="js/TournamentLoader.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/Constants.js"></script>
+
 
 
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+            src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <script>
-       if(checkUser()==false)
-       {
-           window.location.assign("./index.html");
-       }
-    </script>
 
+    <script>
+        if(checkUser()==false)
+        {
+            window.location.assign("./index.html");
+        }
+        else
+        {
+            loadMovieJS();
+            $(".selector").flatpickr();
+        }
+    </script>
 </body>
 
 </html>
