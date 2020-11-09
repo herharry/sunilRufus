@@ -25,7 +25,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto" id="adminList">
                     <li class="nav-item ">
                         <a class="nav-link middle" href="./dashboard.html">Home</a>
                     </li>
@@ -167,7 +167,8 @@
 
 
     <script>
-        if(checkUser()==false)
+        let role = checkUser();
+        if(role == 0)
         {
             window.location.assign("./index.html");
         }

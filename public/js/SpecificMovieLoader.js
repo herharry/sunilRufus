@@ -88,7 +88,7 @@ function loadCurrentMovie()
             }
             lang.innerHTML = langString;
 
-            document.getElementById("gist").innerHTML = movie.gist;
+            document.getElementById("gist").innerHTML = movie.description;
             flag = 1;
         }
     });
