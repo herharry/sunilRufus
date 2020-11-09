@@ -5,17 +5,6 @@ let GAMES;
 let TID_LIST = [];
 let game
 
-function getMovieFromLocalStorage() {
-    let moviesInLocalStorage = JSON.parse(localStorage.getItem("movies"));
-    if (moviesInLocalStorage == undefined) {
-        iziToast.error({
-            message: "no movies loaded! showing some default hard coded movies we have",
-            position: "topRight"
-        })
-    }
-    movies = JSON.parse("[{\r\n  \"id\":1,\r\n  \"movie\" : \"Anniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\", \"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : 1604852551\r\n},\r\n{\r\n  \"id\":2,\r\n  \"movie\" : \"Banyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"comedy\"],\r\n  \"rating\" : 2,\r\n  \"language\" : [\"tamil\"],\r\n  \"date\" : 1604852531\r\n},\r\n{\r\n  \"id\":3,\r\n  \"movie\" : \"Saniyan\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"suspense\"],\r\n  \"rating\" : 1,\r\n  \"language\" : [\"tamil\", \"english\"],\r\n  \"date\" : 1604852572\r\n},\r\n{\r\n  \"id\":4,\r\n  \"movie\" : \"jsdbfhbsd\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"horror\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"tamil\", \"telugu\"],\r\n \"date\" : 1604852451\r\n},\r\n{\r\n  \"id\":5,\r\n  \"movie\" : \"Suriya\",\r\n  \"url\" : \"https:\/\/in.bmscdn.com\/iedb\/movies\/images\/mobile\/thumbnail\/large\/anniyan-et00002333-24-03-2017-16-17-18.jpg\",\r\n  \"genre\" : [\"thriller\"],\r\n  \"rating\" : 4,\r\n  \"language\" : [\"malayalam\", \"english\"],\r\n  \"date\" : 1604852431\r\n}]\r\n")
-}
-
 function loadMovieJS() {
     let user = JSON.parse(localStorage.getItem("current_user"));
     console.log(user)
@@ -23,7 +12,7 @@ function loadMovieJS() {
         title: "welcome " + user.userName,
         position: "topRight"
     });
-    getMovieFromLocalStorage();
+    movies = getMovieFromLocalStorage("no movies loaded! showing some default hard coded movies we have");
     setGenres()
     setLanguage()
     movieLoader()
@@ -102,12 +91,7 @@ function loadMovieInNewCard(movie, ids) {
     let card = document.createElement("div");
     card.className = "card";
     card.id = ids + "CARD" + movie.id;
-<<<<<<< HEAD:public/js/dashboard.js
     card.setAttribute("onclick","loadSpecificMovie(this)");
-
-=======
-    card.setAttribute("onclick","loadSpecificTournament(this)")
->>>>>>> added:public/js/TournamentLoader.js
     let image = document.createElement("img");
     image.src = movie.url;
     image.className = "card-img-top";
@@ -204,7 +188,7 @@ function formatResponse(res) {
 function loadSpecificMovie(movieRef) {
     let movieID = movieRef.id;
     movieID.split("CARD")[1] != undefined ? movieID = movieID.split("CARD")[1] : movieID = movieID
-    window.location.assign("./tournament.html?id=" + movieID);
+    window.location.assign("./movie.html?id=" + movieID);
 }
 
 //todo show only unregistered tournaments
