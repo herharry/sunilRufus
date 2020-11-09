@@ -27,7 +27,7 @@ function loadMovieJS() {
     console.log(user)
     iziToast.info({
         title: "welcome " + user.userName,
-        position: "topRight"
+        position: "bottomRight"
     });
     movies = getMovieFromLocalStorage("no movies loaded! showing some default hard coded movies we have");
     setGenres()

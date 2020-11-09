@@ -96,7 +96,7 @@ function loadCurrentMovie()
     {
         iziToast.error({
             message: "No such movie exists in our collections",
-            position: "topRight"
+            position: "bottomRight"
         })
     }
 }
@@ -112,23 +112,27 @@ function setMovieRating(rate)
     {
         iziToast.error({
             message: "cant rate now! first watch the movie. click watch now to watch!",
-            position: "topRight"
+            position: "bottomRight"
         })
     }
     else
     {
         iziToast.success({
-            message: "u gave " +rate+ "stars to this movie",
-            position: "topRight"
+            message: "u gave " +rate+ " stars to this movie",
+            position: "bottomRight"
         })
-
         MOVIES.forEach(function (movie) {
             if (movie.id == movieID.id) {
-                movie.rating = movie.rating + rate
+                MOVIES.splice(movie.id-1, 1);
+                movie.rating = ((movie.rating * movie.viewCount) + rate )/(movie.viewCount+1);
+                movie.viewCount = movie.viewCount+1;
+                MOVIES.push(movie);
+                return false;
             }
         });
-
+        localStorage.setItem("movies",JSON.stringify(MOVIES))
     }
+    watchNowFlag = false;
 }
 
 function getParams(url) {

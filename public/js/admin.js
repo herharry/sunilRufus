@@ -25,8 +25,8 @@ function requestMovie()
         language:movieLang,
         description:movieDesc,
         url:movieImg,
-        rating:movieRating,
-        viewCount:0
+        rating:parseInt(movieRating),
+        viewCount:1
     })
 console.log(movies)
     localStorage.setItem("movies",JSON.stringify(movies));
