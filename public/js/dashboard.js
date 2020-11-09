@@ -102,6 +102,7 @@ function loadMovieInNewCard(movie, ids) {
     let card = document.createElement("div");
     card.className = "card";
     card.id = ids + "CARD" + movie.id;
+    card.setAttribute("onclick","loadSpecificMovie(this)");
 
     let image = document.createElement("img");
     image.src = movie.url;
@@ -196,10 +197,10 @@ function formatResponse(res) {
     return ta;
 }
 
-function loadSpecificTournament(tid) {
-    // console.log(tid)
-    tid.split("CARD")[1] != undefined ? tid = tid.split("CARD")[1] : tid = tid
-    window.location.assign("/tournaments?tid=" + tid);
+function loadSpecificMovie(movieRef) {
+    let movieID = movieRef.id;
+    movieID.split("CARD")[1] != undefined ? movieID = movieID.split("CARD")[1] : movieID = movieID
+    window.location.assign("./tournament.html?id=" + movieID);
 }
 
 //todo show only unregistered tournaments

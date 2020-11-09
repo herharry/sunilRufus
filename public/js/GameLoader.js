@@ -70,6 +70,6 @@ function showMovieModal(id)
 function doGetGam(res)
 {
     console.log(res)
-    //todo create a new TournamentLoader.js, create a function called loadTournamentInCards and send this json to dat method.
+    //todo create a new dashboard.js, create a function called loadTournamentInCards and send this json to dat method.
     //todo pass the div id so dat it can create card wherever the div is.... (used to render tournament card in diff places)
 }
